@@ -1,17 +1,16 @@
 // These globals are declared at top-level so every function can see them
 // Define Variables
-let rez1; 
-let rez2;
-let gap;
+// Perlin noise part
+let rez1; // perlin noise angle calculation
+let rez2; // perlin noise color variation
+let gap; // spacing between grid points
 let length;
-let startVary;
-// let startColor; 
-let noiseGraphics; // Perlin noise part 
+let startVary; // variation around start point
+let noiseGraphics; 
 let noiseSpeed = 0.01;
 let noiseScale = 0.01;
-let strokeFactor = 1;
-let t = 0; // Time  //Perlin noise animated part
-
+let strokeFactor = 1; // thickness
+let t = 0; // Time for animation
 
 // Merge lake and land L2-L4
 let activeLevel = 0;

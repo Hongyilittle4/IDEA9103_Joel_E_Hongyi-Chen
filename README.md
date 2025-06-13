@@ -9,21 +9,12 @@
 ##  Individual Approach
 My individual contribution primarily utilizes **Perlin noise** to animate the sky, with **user input** (via buttons ranging from Level 1 to Level 4) used to guide the animation’s emotional intensity.
 
-##  Driven By: Perlin Noise
-I chose **Perlin noise** as the core driver of my animation. I use it for both the **direction** and **color variation** of sky lines, with additional noise-based logic for dynamic movement and texture layering.
-
-##  Animated Properties
-- **Line distortion and direction** change across levels, becoming more chaotic with higher levels.
-- **Stroke thickness** increases with each emotional stage.
-- **Color palette** is randomized but constrained to hues (blue, yellow, brown) matching the mood of *The Scream*.
-- **Lines animate over time**, simulating emotional instability.
-- Uniqueness: My work exclusively animates the **sky layer**, while other group members focused on figures, geometry, or land texture.
-
 ##  Visual Inspiration
 Inspired by:
-- The sky in Edvard Munch’s *The Scream*
+- The animated version of [Vincent van Gogh’s *Starry Night* ](https://www.youtube.com/watch?v=pCHFAsXYHGA)
 - This generative art reference using Perlin noise and color mapping: [Steve’s Makerspace – Flow Field](https://editor.p5js.org/StevesMakerspace/sketches/4zn-XY-FH)
 These influenced my color control and the way I structured flowing animated lines.
+![alt text](<Perlin Noise.png>)
 
 ##  Technical Explanation
 - The sky is drawn in a separate `noiseGraphics` layer using `createGraphics()` and `colorMode(HSB)`.
@@ -31,16 +22,23 @@ These influenced my color control and the way I structured flowing animated line
 - Four animation levels are triggered by buttons; each adjusts `noiseSpeed`, `noiseScale`, and `strokeFactor`.
 - `drawAnimatedNoise()` generates time-based motion, and `drawNoiseLines()` handles the initial static rendering.
 - The final output mimics oil painting via `applyPaperTexture()`, which samples colors and overlays short curved strokes.
-
-##  Group Code Modifications
-I added `drawAnimatedNoise()`, level-based noise variation arrays, and modified button logic to dynamically change the noise behavior. These changes integrate seamlessly with the existing group structure and rendering pipeline.
-
-##  External Tools & Techniques
-- **Perlin noise flow field concept** adapted from open tutorials.
-- **Paper texture layering** was implemented to simulate an oil-painting effect.
-- **SVG-to-p5.js path conversion** was done using [svg2p5.com](https://svg2p5.com).
+###  How To Achieve The Ideal Visual Effect
+- **Line distortion and direction** change across levels, becoming more chaotic with higher levels.
+- **Stroke thickness** increases with each emotional stage.
+- **Color palette** is randomized but constrained to hues (blue, yellow, brown) matching the mood of *The Scream*.
+- **Lines animate over time**, simulating emotional instability.
+- Uniqueness: My work exclusively animates the **sky layer**, while other group members focused on figures, geometry, or land texture.
+###  How the Perlin Noise Sky Was Made Animated
+I transformed the originally static sky into an animated one by:
+- Introducing a time variable (`t`) and incorporating it into the noise function to simulate a continuously flowing sky.
+- Replacing `noLoop()` with `draw()` to enable frame-by-frame canvas updates.
+- Modifying noise coordinates over time, creating the illusion that the painterly background is alive and subtly shifting.
 
 ##  References
-- Steve’s Makerspace. “Flow Field.” *p5.js Editor*, https://editor.p5js.org/StevesMakerspace/sketches/4zn-XY-FH  
-- Munch, Edvard. *The Scream* (1893)  
-- svg2p5.com – for SVG shape-to-code conversion
+
+StevesMakerspace. (n.d.). *Flow fields for YT* [Computer software]. p5.js Web Editor. https://editor.p5js.org/StevesMakerspace/sketches/4zn-XY-FH
+
+Author Media. (n.d.). *The ultimate guide to writing YouTube video descriptions and titles* [Video]. YouTube. https://www.youtube.com/watch?v=CSMcrKouQ3o
+
+StevesMakerspace. (n.d.). *Perlin noise flow field colors* [Computer software]. p5.js Web Editor. https://editor.p5js.org/StevesMakerspace/sketches/qTjXhdC8t
+

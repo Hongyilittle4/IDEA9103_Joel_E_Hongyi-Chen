@@ -884,6 +884,7 @@ function drawScreamCharacter(expression) {   // Start of character drawing
 
 // Start of Sky Drawing
 // This function draws the sky background in the form of static perlin noise used in Level 1. It mimics a sky looked like oil-painting by creating short curved line segments.
+// Here is the link of my reference：https://editor.p5js.org/StevesMakerspace/sketches/4zn-XY-FH
 function drawNoiseLines() {
   for (let x = -20; x < width + 20; x += gap) {
     for (let y = -20; y < height + 20; y += gap) {

@@ -946,6 +946,8 @@ function updateNoiseLayer() {
   noiseGraphics.clear();
   noiseGraphics.background(25, 80, 30); // Reset sky's base color.
   drawNoiseLines(); // Redraw the static perlin noise lines.
+  
+  //This technique is from https://editor.p5js.org/StevesMakerspace/sketches/4zn-XY-FH
   applyPaperTexture(1); // Apply paper texture to the noise graphics.
   applyPaperTexture(0); // Apply a secondary texture for better visual effect.
 }

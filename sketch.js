@@ -883,24 +883,29 @@ function drawScreamCharacter(expression) {   // Start of character drawing
 
 
 // Start of Sky Drawing
+// This function draws the sky background in the form of static perlin noise used in Level 1. It mimics a sky looked like oil-painting by creating short curved line segments.
 function drawNoiseLines() {
   for (let x = -20; x < width + 20; x += gap) {
     for (let y = -20; y < height + 20; y += gap) {
+
+      // Get a value from 0-1 to use as the base for color.
       let colorNoise = noise(x * rez2, y * rez2);
 
-      // This is the original color of Perlin noise (Level 1)
+      // Turn the value into a hue & This is the original color of my static perlin noise (Level 1)
       let hue;
       if (colorNoise < 0.3) hue = map(colorNoise, 0, 0.3, 210, 220);
       else if (colorNoise < 0.7) hue = map(colorNoise, 0.3, 0.7, 30, 50);
       else hue = map(colorNoise, 0.7, 1, 20, 30);
       let saturation = map(colorNoise, 0, 1, 70, 90);
       let brightness = map(colorNoise, 0, 1, 20, 80);
-      let strokeAlpha = 160 + random(-30, 30);
+      let strokeAlpha = 160 + random(-30, 30); // Randomize the value to make the outcome more natural.
       noiseGraphics.stroke(hue, saturation, brightness, strokeAlpha);
 
-      let varyAmountArr = [5, 10, 25, 30];
-      let lenAmountArr = [8, 10, 12, 5];  // Special short lines for Level 4
-      let strokeFactorArr = [0.5, 0.7, 1.0, 0.9];
+
+      // This is used to fit with the different levels of emotion demonstrated by clicking different buttons. From Level 1 to Level 4, the lines become more complex and jittery.
+      let varyAmountArr = [5, 10, 25, 30];  // Jitter
+      let lenAmountArr = [8, 10, 12, 5];  // Segment length
+      let strokeFactorArr = [0.5, 0.7, 1.0, 0.9]; // Thickness
 
       let varyAmount = varyAmountArr[activeLevel - 1];
       let lenAmount = lenAmountArr[activeLevel - 1];
@@ -909,10 +914,12 @@ function drawNoiseLines() {
       let currentX = x + random(-varyAmount, varyAmount);
       let currentY = y + random(-varyAmount, varyAmount);
 
+      // This is to perlin noise line, each of them is made of 10 segments.
       for (let step = 10; step > 0; step--) {
         let strokeW = step * strokeFactor;
         noiseGraphics.strokeWeight(strokeW);
 
+        // Generate a noise value to determine the angle of the line segment. I made the angle varies more as levels increase, implying more emotional instability.
         let angleNoise = (noise(currentX * rez1, currentY * rez1) - 0.2) * 2;
         let angle = angleNoise * PI * (activeLevel === 1 ? 0.1 : 0.4 + 0.2 * activeLevel);
 
@@ -922,6 +929,7 @@ function drawNoiseLines() {
           currentY += random(-40, 40);
         }
 
+        // Calculate the next point based on the angle and length, then draw the line segment.
         let nextX = cos(angle) * lenAmount + currentX;
         let nextY = sin(angle) * lenAmount + currentY;
         noiseGraphics.line(currentX, currentY, nextX, nextY);
@@ -932,21 +940,24 @@ function drawNoiseLines() {
   }
 }
 
+// This function initializes the canvas and sets up the noise graphics layer.
 function updateNoiseLayer() {
   noiseGraphics.clear();
-  noiseGraphics.background(25, 80, 30);
-  drawNoiseLines();
-  applyPaperTexture(1);
-  applyPaperTexture(0);
+  noiseGraphics.background(25, 80, 30); // Reset sky's base color.
+  drawNoiseLines(); // Redraw the static perlin noise lines.
+  applyPaperTexture(1); // Apply paper texture to the noise graphics.
+  applyPaperTexture(0); // Apply a secondary texture for better visual effect.
 }
 
+// This part aims to make the originally static perlin noise animated.
 function drawAnimatedNoise() {
   noiseGraphics.clear();
-  noiseGraphics.background(25, 80, 30);
-  noiseGraphics.strokeCap(SQUARE);
+  noiseGraphics.background(25, 80, 30); // Reset background color.
+  noiseGraphics.strokeCap(SQUARE); // Set stroke cap to square for sharper edges to achieve better visual effect.
 
   for (let x = 0; x < width; x += gap) {
     for (let y = 0; y < height; y += gap) {
+      // Use "t" to animate the perlin noise
       let colorNoise = noise(x * rez2, y * rez2, t);
       let hue = colorNoise < 0.3 ? map(colorNoise, 0, 0.3, 210, 220) :
                 colorNoise < 0.7 ? map(colorNoise, 0.3, 0.7, 30, 50) :
@@ -959,10 +970,12 @@ function drawAnimatedNoise() {
       let currentX = x + random(-startVary, startVary);
       let currentY = y + random(-startVary, startVary);
 
+      // This part is the same as the previously static one.
       for (let step = 10; step > 0; step--) {
         let strokeW = step * strokeFactor;
         noiseGraphics.strokeWeight(strokeW);
 
+        // This part is to make the direction angle change over time, creating an animated effect.
         let angleNoise = (noise(currentX * rez1, currentY * rez1, t) - 0.2) * 2;
         let angle = angleNoise * PI;
 
@@ -976,10 +989,12 @@ function drawAnimatedNoise() {
     }
   }
 
+  //This part is used to draw the animated noise graphics onto the main canvas.
   image(noiseGraphics, 0, 0, width, height);
-  t += noiseSpeed; 
+  t += noiseSpeed; // Increment time variable to animate the noise.
 }
 
+// This part applies a paper texture to the noise graphics layer, so the final output can look like an oil painting on paper.
 function applyPaperTexture(textureType) {
   noiseGraphics.noFill();
   let colorVariation = 15;
@@ -987,10 +1002,12 @@ function applyPaperTexture(textureType) {
   let alphaValue = textureType < 1 ? 15 : 210;
   noiseGraphics.strokeWeight(textureType < 1 ? width * 0.02 : max(1, width * 0.0011));
 
-  noiseGraphics.colorMode(RGB);
+  noiseGraphics.colorMode(RGB); // Switch to RGB mode for texture drawing
   for (let i = 0; i < textureCount; i++) {
     let x = random(width);
     let y = random(height);
+
+    // Sample a color from the noise graphics layer and apply a random variation to it.
     let sampledColor = noiseGraphics.get(x, y);
     noiseGraphics.stroke(
       sampledColor[0] + random(-colorVariation, colorVariation),
@@ -998,6 +1015,7 @@ function applyPaperTexture(textureType) {
       sampledColor[2] + random(-colorVariation, colorVariation),
       alphaValue
     );
+    // Draw a short curve segment to simulate the texture.
     noiseGraphics.push();
     noiseGraphics.translate(x, y);
     noiseGraphics.rotate(random(TWO_PI));
@@ -1009,6 +1027,8 @@ function applyPaperTexture(textureType) {
     );
     noiseGraphics.pop();
   }
+
+  // Change the color mode back to HSB for the main drawing.
   noiseGraphics.colorMode(HSB, 360, 100, 100, 255);
 } // End of sky drawing *********************************
 

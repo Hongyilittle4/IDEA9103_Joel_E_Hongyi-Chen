@@ -7,7 +7,7 @@
 - **Resize the window**: The canvas and elements will adapt dynamically to fit the screen.
 
 ##  Individual Approach
-My individual contribution focuses on animating the **sky** using Perlin noise. 
+My individual contribution primarily utilizes **Perlin noise** to animate the sky, with **user input** (via buttons ranging from Level 1 to Level 4) used to guide the animation’s emotional intensity.
 
 ##  Driven By: Perlin Noise
 I chose **Perlin noise** as the core driver of my animation. I use it for both the **direction** and **color variation** of sky lines, with additional noise-based logic for dynamic movement and texture layering.

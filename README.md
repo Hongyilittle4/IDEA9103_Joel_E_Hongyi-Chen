@@ -28,7 +28,7 @@ These influenced my color control and the way I structured flowing animated line
 - **Color palette** is randomized but constrained to hues (blue, yellow, brown) matching the mood of *The Scream*.
 - **Lines animate over time**, simulating emotional instability.
 - Uniqueness: My work exclusively animates the **sky layer**, while other group members focused on figures, geometry, or land texture.
-###  How the Perlin Noise Sky Was Made Animated
+###  How The Perlin Noise Sky Was Made Animated
 I transformed the originally static sky into an animated one by:
 - Introducing a time variable (`t`) and incorporating it into the noise function to simulate a continuously flowing sky.
 - Replacing `noLoop()` with `draw()` to enable frame-by-frame canvas updates.
